@@ -53,6 +53,26 @@ a:hover .cover-image, button:hover .cover-image { transform: scale(1.035); }
 .skip-link { position: fixed; top: -100px; left: 20px; padding: 16px 24px; background: var(--green); color: white; z-index: 1000; }
 .skip-link:focus { top: 12px; }
 
+/* Scroll motion is progressive enhancement: these tokens never hide content.
+   Only offscreen elements animate once, using opacity/transform (no layout shift). */
+[data-reveal] { --reveal-distance: 24px; --reveal-scale: 1; --reveal-duration: 760ms; --reveal-delay: 0ms; }
+[data-reveal="image"] { --reveal-distance: 18px; --reveal-scale: .985; --reveal-duration: 900ms; }
+[data-reveal-delay="1"] { --reveal-delay: 90ms; }
+[data-reveal-delay="2"] { --reveal-delay: 180ms; }
+[data-reveal-delay="3"] { --reveal-delay: 270ms; }
+@media (max-width: 640px) {
+  [data-reveal] { --reveal-distance: 16px; --reveal-duration: 640ms; }
+  [data-reveal="image"] { --reveal-distance: 12px; --reveal-duration: 760ms; }
+  [data-reveal-delay="1"] { --reveal-delay: 60ms; }
+  [data-reveal-delay="2"] { --reveal-delay: 120ms; }
+  [data-reveal-delay="3"] { --reveal-delay: 180ms; }
+}
+/* Focus, printing and a live preference change must never leave a faded link. */
+[data-reveal]:focus-within { opacity: 1 !important; transform: none !important; }
+@media print, (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
 /* Small details are deliberately quiet; every control retains a 44px target. */
 .text-link { display: inline-flex; align-items: center; min-height: 44px; gap: 16px; font-size: 11px; font-weight: 500; letter-spacing: .12em; line-height: 1.6; text-transform: uppercase; }
 .text-link span { position: relative; padding-block: 3px; }

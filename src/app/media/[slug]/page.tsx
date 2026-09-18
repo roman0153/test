@@ -33,7 +33,7 @@ export default async function ArticlePage({ params }: Props) {
       <article>
         <header className="container article-heading"><div className="breadcrumb"><Link href="/media">Denník</Link><span aria-hidden="true">/</span><span>{article.category}</span></div><p className="eyebrow">{article.category} <span className="eyebrow-divider">/</span> {article.readTime}</p><h1>{article.title}</h1><p className="article-excerpt">{article.excerpt}</p><time dateTime={article.date}>{new Intl.DateTimeFormat("sk", { dateStyle: "long", timeZone: "UTC" }).format(new Date(article.date))}</time></header>
         <div className="container article-cover image-wrap"><Image src={article.image} alt={article.title} fill priority sizes="90vw" className="cover-image" /></div>
-        <div className="article-body">{article.sections.map((section) => <section key={section.title}><h2>{section.title}</h2><p>{section.text}</p></section>)}<div className="article-signature"><span className="eyebrow">Denník Eden Gardens</span><p>Inšpirácia pre váš život vonku.</p></div><TextLink href="/media">Späť na všetky články</TextLink></div>
+        <div className="article-body">{article.sections.map((section) => <section key={section.title} data-reveal="up"><h2>{section.title}</h2><p>{section.text}</p></section>)}<div className="article-signature"><span className="eyebrow">Denník Eden Gardens</span><p>Inšpirácia pre váš život vonku.</p></div><TextLink href="/media">Späť na všetky články</TextLink></div>
       </article>
       <ContactBanner />
     </>

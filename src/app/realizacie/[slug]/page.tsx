@@ -42,8 +42,8 @@ export default async function ProjectPage({ params }: Props) {
       </div>
       <div className="project-detail-hero image-wrap"><Image src={project.image} alt={project.imageAlt} fill sizes="100vw" priority className="cover-image" /></div>
       <section className="container project-story section-space">
-        <div><p className="eyebrow">O projekte</p><h2>Priestor, ktorý<br />dáva zmysel.</h2><div className="project-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></div>
-        <div><p className="body-copy">{project.description}</p><dl className="project-facts"><div><dt>Lokalita konceptu</dt><dd>{project.location}</dd></div><div><dt>Rok štúdie</dt><dd>{project.year}</dd></div><div><dt>Modelová plocha</dt><dd>{project.area}</dd></div></dl></div>
+        <div data-reveal="up"><p className="eyebrow">O projekte</p><h2>Priestor, ktorý<br />dáva zmysel.</h2><div className="project-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></div>
+        <div data-reveal="up" data-reveal-delay="1"><p className="body-copy">{project.description}</p><dl className="project-facts"><div><dt>Lokalita konceptu</dt><dd>{project.location}</dd></div><div><dt>Rok štúdie</dt><dd>{project.year}</dd></div><div><dt>Modelová plocha</dt><dd>{project.area}</dd></div></dl></div>
       </section>
       <section className="container project-gallery-section" aria-label="Fotogaléria projektu"><ProjectGallery images={project.gallery} title={project.title} /><p className="content-disclaimer">Fotografie slúžia ako vizuálna inšpirácia a nezobrazujú jeden konkrétny realizovaný projekt.</p></section>
       <div className="container project-next"><span className="eyebrow">Ďalší príbeh</span><TextLink href={`/realizacie/${nextProject.slug}`}>{nextProject.title}</TextLink></div>

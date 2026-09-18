@@ -19,8 +19,8 @@ export default function ServicesPage() {
       <div className="container service-details">
         {services.map((service) => (
           <section className="service-detail" id={service.id} key={service.id} aria-labelledby={`${service.id}-title`}>
-            <div className="service-detail-image image-wrap"><Image src={service.image} alt={`Ilustrácia služby ${service.name.toLocaleLowerCase("sk")}`} fill sizes="(max-width: 760px) 90vw, 45vw" className="cover-image" /></div>
-            <div className="service-detail-copy">
+            <div className="service-detail-image image-wrap" data-reveal="image"><Image src={service.image} alt={`Ilustrácia služby ${service.name.toLocaleLowerCase("sk")}`} fill sizes="(max-width: 760px) 90vw, 45vw" className="cover-image" /></div>
+            <div className="service-detail-copy" data-reveal="up" data-reveal-delay="1">
               <div className="service-detail-label"><p className="eyebrow">{service.number} / {service.name}</p><ServiceIcon name={service.id} /></div>
               <h2 id={`${service.id}-title`}>{service.title}</h2>
               <p className="body-copy">{service.description}</p>
@@ -31,12 +31,12 @@ export default function ServicesPage() {
         ))}
       </div>
       <section className="process-section section-space">
-        <div className="container"><p className="eyebrow">Ako spolupracujeme</p><h2>Prirodzený proces.<br />Jasný smer.</h2><div className="process-grid">{[
+        <div className="container"><p className="eyebrow" data-reveal="up">Ako spolupracujeme</p><h2 data-reveal="up">Prirodzený proces.<br />Jasný smer.</h2><div className="process-grid">{[
           ["01", "Spoznáme sa", "Porozprávame sa o vašich predstavách, mieste a možnostiach."],
           ["02", "Nájdeme koncept", "Navrhneme riešenie, ktoré prepája váš životný štýl s charakterom miesta."],
           ["03", "Dáme mu podobu", "Dohodneme rozsah, rozpočet a jednotlivé kroky realizácie."],
           ["04", "Necháme ho rásť", "Odovzdáme záhradu a dohodneme vhodnú následnú starostlivosť."],
-        ].map(([number, title, text]) => <div key={number}><span className="process-number">{number}</span><h3>{title}</h3><p>{text}</p></div>)}</div></div>
+        ].map(([number, title, text], index) => <div key={number} data-reveal="up" data-reveal-delay={index}><span className="process-number">{number}</span><h3>{title}</h3><p>{text}</p></div>)}</div></div>
       </section>
       <ContactBanner />
     </>

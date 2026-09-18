@@ -16,8 +16,8 @@ export default function MediaPage() {
   return (
     <>
       <PageHeading eyebrow="Médiá / denník" title="Myšlienky, ktoré rastú." description="O záhradách. O architektúre. O malých veciach, ktoré robia život vonku krajším." />
-      <section className="container journal-section" aria-label="Články a inšpirácia"><div className="journal-grid">{articles.map((article) => (
-        <Link key={article.slug} href={`/media/${article.slug}`} className="journal-card"><div className="journal-image image-wrap"><Image src={article.image} alt={article.title} fill sizes="(max-width: 640px) 90vw, (max-width: 1000px) 45vw, 28vw" className="cover-image" /></div><div className="journal-meta"><span>{article.category}</span><span>{article.readTime}</span></div><h2>{article.title}</h2><p>{article.excerpt}</p><span className="journal-read">Prečítať príbeh<ArrowIcon /></span></Link>
+      <section className="container journal-section" aria-label="Články a inšpirácia"><div className="journal-grid">{articles.map((article, index) => (
+        <Link key={article.slug} href={`/media/${article.slug}`} className="journal-card" data-reveal="up" data-reveal-delay={index}><div className="journal-image image-wrap"><Image src={article.image} alt={article.title} fill sizes="(max-width: 640px) 90vw, (max-width: 1000px) 45vw, 28vw" className="cover-image" /></div><div className="journal-meta"><span>{article.category}</span><span>{article.readTime}</span></div><h2>{article.title}</h2><p>{article.excerpt}</p><span className="journal-read">Prečítať príbeh<ArrowIcon /></span></Link>
       ))}</div><p className="content-disclaimer">Redakčný denník ukážkového webu. Fotografie sú ilustračné.</p></section>
       <ContactBanner />
     </>

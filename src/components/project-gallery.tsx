@@ -30,7 +30,7 @@ export function ProjectGallery({ images, title }: { images: { src: string; alt: 
     <>
       <div className="project-gallery">
         {images.map((image, index) => (
-          <button key={image.src} className="gallery-image image-wrap" onClick={() => show(index)} aria-label={`Zväčšiť fotografiu: ${image.alt}`}>
+          <button key={image.src} className="gallery-image image-wrap" data-reveal="image" data-reveal-delay={index % 2} onClick={() => show(index)} aria-label={`Zväčšiť fotografiu: ${image.alt}`}>
             <Image src={image.src} alt={image.alt} fill sizes="(max-width: 640px) 90vw, 45vw" className="cover-image" /><span className="gallery-expand" aria-hidden="true">+</span>
           </button>
         ))}

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { ScrollAnimations } from "@/components/scroll-animations";
 import { getSiteUrl, images, site } from "@/lib/content";
 import "./globals.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skip-link" href="#main-content">Preskočiť na obsah</a>
         <Header />
         <main id="main-content" tabIndex={-1}>{children}</main>
+        <ScrollAnimations />
         <Footer />
       </body>
     </html>
