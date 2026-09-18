@@ -1,5 +1,17 @@
 const REVEAL_SELECTOR = "[data-reveal]";
 
+/** CSS minifiers can rewrite milliseconds as seconds; WAAPI always expects ms. */
+export function cssTimeToMilliseconds(value: string, fallback: number): number {
+  const normalized = value.trim();
+  if (normalized === "0") return 0;
+
+  const match = /^([+-]?(?:\d*\.)?\d+)(ms|s)$/i.exec(normalized);
+  if (!match) return fallback;
+
+  const milliseconds = Number(match[1]) * (match[2].toLowerCase() === "s" ? 1000 : 1);
+  return Number.isFinite(milliseconds) && milliseconds >= 0 ? milliseconds : fallback;
+}
+
 /** Enhance existing markup without hiding it in CSS or changing React's DOM. */
 export function observeScrollReveals(root: HTMLElement): () => void {
   if (
@@ -50,8 +62,8 @@ export function observeScrollReveals(root: HTMLElement): () => void {
         { opacity: 0, transform: `translate3d(0, ${distance}, 0) scale(${scale})` },
         { opacity: 1, transform: "none" },
       ], {
-        duration: Number.parseFloat(style.getPropertyValue("--reveal-duration")) || 760,
-        delay: Number.parseFloat(style.getPropertyValue("--reveal-delay")) || 0,
+        duration: cssTimeToMilliseconds(style.getPropertyValue("--reveal-duration"), 760),
+        delay: cssTimeToMilliseconds(style.getPropertyValue("--reveal-delay"), 0),
         easing: "cubic-bezier(0.22, 1, 0.36, 1)",
         fill: "backwards",
       });
