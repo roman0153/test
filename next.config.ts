@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
+      { protocol: "https", hostname: "i.pinimg.com", port: "", pathname: "/originals/**", search: "" },
     ],
     formats: ["image/avif", "image/webp"],
   },

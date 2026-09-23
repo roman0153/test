@@ -39,8 +39,20 @@ This is a server-capable Next.js application, **not a static export**: the conta
 - **Journal:** three complete garden/architecture articles with individual routes and metadata.
 - **Contact:** client/server validation, inline accessible errors, submission states, genuine server processing and expandable FAQs.
 - **Privacy, 404 and error pages**, responsive navigation, keyboard focus handling, reduced-motion styles, page metadata, sitemap and robots directives.
+- **Scroll animations:** soft fade-and-lift section reveals, gentle image entrances and staggered service, project and journal cards.
 
 The design uses system fonts to avoid an external font dependency. Native modal dialogs provide keyboard focus containment, Escape handling and focus restoration. Hero rotation is off by default and stops when a visitor enters it with a pointer or keyboard.
+
+### Scroll motion
+
+The small client entry point in [src/components/scroll-animations.tsx](src/components/scroll-animations.tsx) enhances the server-rendered pages without adding wrappers or animation dependencies. The controller in [src/lib/scroll-reveal.ts](src/lib/scroll-reveal.ts) uses one `IntersectionObserver` and the browser's Web Animations API; there are no continuous scroll handlers or custom scroll physics.
+
+- Add `data-reveal="up"` to an existing section/card or `data-reveal="image"` to an image wrapper. Optional `data-reveal-delay="1"`, `"2"` or `"3"` gives a short stagger. Avoid nesting reveal targets.
+- Tune the `--reveal-*` tokens in [src/app/globals.css](src/app/globals.css). Mobile uses shorter distances, durations and delays.
+- An offscreen element animates once as it approaches the viewport. Content already visible on initial hydration, scroll restoration or insertion is not faded out. Page headings, hero/LCP images, forms and modal dialogs are left immediate.
+- Content remains visible with JavaScript disabled or animation APIs unavailable. No hidden classes, `aria-hidden`, or layout-changing styles are used; animation effects are removed after completion.
+- Reduced-motion preferences, including live changes, skip/cancel the effects. Keyboard focus and hash navigation reveal the relevant content immediately; printing also disables the effects.
+- Streamed route content and newly inserted project cards are registered automatically. Removed elements, observers, animations and listeners are cleaned up.
 
 ## Contact form: real behavior, no simulated success
 
@@ -94,9 +106,13 @@ The limiter is **best-effort and per process**, not a distributed anti-abuse ser
 
 ## Content and photographs
 
-**All project descriptions, areas, locations and portfolio photographs are illustrative.** They do not claim to document actual studio commissions. This is disclosed in the interface. No real business address, phone, awards, testimonials or press coverage have been invented.
+**All project descriptions, areas and locations remain illustrative.** The selected photographs do not verify the sample projects or claim to document those commissions. This is disclosed in the interface. No real business address, phone, awards, testimonials or press coverage have been invented.
 
-Edit [src/lib/content.ts](src/lib/content.ts) for project, service, journal and navigation content. Replace sample copy with approved studio information before launch. Images currently use external Unsplash URLs with Next.js image optimisation. The browser/server needs access to those images; no photographs are bundled locally. Replace them with your own licensed assets for an authentic production portfolio and remove the illustrative labels only after doing so. Image host restrictions are in [next.config.ts](next.config.ts).
+Edit [src/lib/content.ts](src/lib/content.ts) for project, service, journal and navigation content. The seven shared photos now come from the public **ÁTRIOVÁ záhrada** board on the [requested Eden Gardens Pinterest profile](https://sk.pinterest.com/edengardens_atelier/_saved/). Each image has its source pin recorded beside its URL. The first hero photo matches the supplied Pinterest share link.
+
+Images use direct HTTPS `i.pinimg.com/originals/` URLs with Next.js image optimisation. A `pin.it` share link or Pinterest pin-page URL returns a webpage, not an image, and must not be used as an image source. Only the original-image host and path are allowed in [next.config.ts](next.config.ts); restart the development server or redeploy after changing that configuration. The browser/server needs access to Pinterest's image CDN; no photographs are bundled locally and the remote URLs can change or become unavailable.
+
+Public pins are **not a licence to republish**. Confirm the photographer/rightsholder's permission before publication, retain required credits, and preferably serve the approved original files from storage you control. Existing image marks have not been edited out. Replace sample copy with verified studio information and remove the illustrative labels only after confirming the photos actually correspond to the listed projects.
 
 The privacy page is explicitly a **demo notice**, not a finished legal policy for a particular company. Before collecting real inquiries publicly, replace it with the actual controller's details, legal basis, retention policy, processor information and applicable rights. The application does not include analytics or advertising cookies.
 
@@ -122,6 +138,8 @@ The test suite covers validation and malformed input, origin/content-type/body-s
 - **18 isolated layout checks passed** across homepage, portfolio and contact fixtures at 320, 360, 390, 768, 1024 and 1440 px, using the actual stylesheet. A tablet image overflow was found and corrected. These fixtures do not execute React or Next.js.
 - Garden photograph URLs were inspected and loaded in the browser; Next.js server-side image optimisation remains untested until the framework runs.
 - A full dependency-aware typecheck, ESLint run, Next.js build and live-application browser test remain blocked by registry authentication. Syntax-only checks are **not** a substitute for these.
+
+The original scroll-animation test and compiler reruns were skipped. During the Pinterest photo replacement, **44/44 native tests passed**, including the scroll timing tests and new checks for direct image URLs and the Next.js image allowlist. All seven selected original images loaded and decoded in an isolated browser gallery; their source pins and dimensions were inspected. This does not verify Next.js server-side optimisation or the updated Vercel deployment. Editor diagnostics still report missing local Node typings; dependency-aware typechecking and a production build remain outstanding.
 
 VS Code tasks for tests, development, production build and all checks are available in [.vscode/tasks.json](.vscode/tasks.json). Use **Terminal → Run Task**. The development task is ready for use after dependencies are installed.
 

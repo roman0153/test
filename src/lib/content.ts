@@ -24,15 +24,25 @@ export const navigation = [
   { href: "/kontakt", label: "Kontakt" },
 ];
 
-// Illustrative Unsplash photography, not photographs of actual studio commissions.
+// Selected from Eden Gardens' public ÁTRIOVÁ záhrada Pinterest board.
+// Direct image URLs are required: pin.it and Pinterest pin pages are not images.
+// Pin sources are recorded below; permission must be confirmed before publication.
+// The project names, locations and descriptions below remain illustrative.
 export const images = {
-  garden: "https://images.unsplash.com/photo-1598714805247-5dd440d87124?auto=format&fit=crop&w=2400&q=85",
-  courtyard: "https://images.unsplash.com/photo-1633330948542-0b3bdeefcdb3?auto=format&fit=crop&w=2000&q=85",
-  house: "https://images.unsplash.com/photo-1696846911635-83b97e53fb65?auto=format&fit=crop&w=2000&q=85",
-  greenery: "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&w=1600&q=85",
-  planting: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1600&q=85",
-  park: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1600&q=85",
-  detail: "https://images.unsplash.com/photo-1470259478948-d5605cd2fe53?auto=format&fit=crop&w=1600&q=85",
+  // https://www.pinterest.com/pin/714876140876899590/ (the supplied pin.it link)
+  garden: "https://i.pinimg.com/originals/a9/c9/d2/a9c9d25249ba410fb8e56f2c225b6ee6.jpg",
+  // https://www.pinterest.com/pin/714876140878298150/
+  courtyard: "https://i.pinimg.com/originals/0f/cd/28/0fcd286694c8d2f236e6345f785caf73.jpg",
+  // https://www.pinterest.com/pin/714876140876633241/
+  house: "https://i.pinimg.com/originals/1e/22/dd/1e22dd57193e2324f48a9912d02d772f.jpg",
+  // https://www.pinterest.com/pin/714876140877421156/
+  greenery: "https://i.pinimg.com/originals/a8/0f/a7/a80fa732a3cec95342a0d7d6f03050d0.jpg",
+  // https://www.pinterest.com/pin/714876140876459917/
+  planting: "https://i.pinimg.com/originals/3d/2e/e2/3d2ee2f24a9fd74aa0a0d117230c0b5c.jpg",
+  // https://www.pinterest.com/pin/714876140876459927/
+  park: "https://i.pinimg.com/originals/2e/5a/d4/2e5ad4d1b7f9f8bc0a62b47f0f40ee52.jpg",
+  // https://www.pinterest.com/pin/714876140884895355/
+  detail: "https://i.pinimg.com/originals/2d/77/ea/2d77eae51f7ca21cfebd04d2bfd069ec.jpg",
 };
 
 export type ServiceId = "navrh" | "realizacia" | "udrzba" | "zavlahy";
@@ -121,14 +131,14 @@ export const projects: Project[] = [
     year: "2025",
     area: "680 m²",
     image: images.garden,
-    imageAlt: "Moderný dom otvorený do zelenej záhrady s pobytovou terasou",
+    imageAlt: "Zelený trávnik so vzrastlou borovicou pri modernom dome",
     intro: "Miesto, kde sa interiér prirodzene stretáva s prírodou.",
     description:
       "Ukážkový koncept rodinnej záhrady stavia na jednoduchosti. Pokojná trávnatá plocha, mäkké línie výsadby a terasa pri dome vytvárajú priestor pre obyčajné, vzácne chvíle. Kompozícia pracuje s prirodzeným svetlom a pohľadmi z obytných miestností.",
     gallery: [
-      { src: images.courtyard, alt: "Prepojenie modernej architektúry s exteriérom" },
-      { src: images.greenery, alt: "Hustá zelená výsadba v záhrade" },
-      { src: images.house, alt: "Pobytová plocha pri súčasnom rodinnom dome" },
+      { src: images.courtyard, alt: "Kamenné nášľapy a okrúhla hrdzavá misa medzi výsadbou" },
+      { src: images.greenery, alt: "Záhradný chodník medzi trávnikom a nízkou výsadbou" },
+      { src: images.house, alt: "Moderný dom s átriovou záhradou a okrúhlou misou" },
     ],
     tags: ["Návrh", "Výsadba", "Pobytová terasa"],
   },
@@ -145,8 +155,8 @@ export const projects: Project[] = [
     description:
       "Ilustračná štúdia záhrady na okraji mesta necháva hlavnú úlohu rastlinám. Vrstvená výsadba vytvára súkromie, zatiaľ čo otvorené plochy nechávajú záhradu dýchať. Výber druhov zohľadňuje slnečné stanovište a premenlivosť ročných období.",
     gallery: [
-      { src: images.park, alt: "Prírodná záhradná kompozícia" },
-      { src: images.planting, alt: "Detail starostlivosti o výsadbu" },
+      { src: images.park, alt: "Pohľad zhora na nášľapy, výsadbu a okrúhlu misu v átriu" },
+      { src: images.planting, alt: "Trvalková výsadba pri presklenom okne domu" },
     ],
     tags: ["Prírodná výsadba", "Trvalky", "Súkromie"],
   },
@@ -158,7 +168,7 @@ export const projects: Project[] = [
     year: "2024",
     area: "85 m²",
     image: images.courtyard,
-    imageAlt: "Terasa pri modernom dome obklopená zeleňou",
+    imageAlt: "Nášľapový chodník a okrúhla misa vo výsadbe pri modernom dome",
     intro: "Ďalšia obývacia izba. Tentoraz pod otvoreným nebom.",
     description:
       "Táto ukážková štúdia prepája jedálenskú a oddychovú zónu s výsadbou v nádobách. Prírodné materiály, jemné textúry a rastliny vytvárajú pokojné zázemie bez zbytočných prvkov. Aj menšia plocha môže ponúknuť veľkorysý pocit priestoru.",
@@ -194,13 +204,13 @@ export const projects: Project[] = [
     year: "2024",
     area: "1 100 m²",
     image: images.park,
-    imageAlt: "Pokojná zelená záhrada s bohato vrstvenou vegetáciou",
+    imageAlt: "Átriová záhrada s nášľapmi a hustou výsadbou pri pohľade zhora",
     intro: "Záhrada, ktorá je v každom ročnom období trochu iná.",
     description:
       "Ukážkový návrh väčšej záhrady skladá jednotlivé plochy do voľnej krajinnej kompozície. Stromy poskytujú tieň a charakter, trvalky prinášajú sezónnosť. Hlavnou myšlienkou je vytvoriť pestré miesto pre ľudí aj drobných záhradných návštevníkov.",
     gallery: [
       { src: images.greenery, alt: "Prirodzené zelené okraje záhrady" },
-      { src: images.planting, alt: "Práca s pôdou a rastlinami" },
+      { src: images.planting, alt: "Detail trvalkového záhona pri modernej fasáde" },
     ],
     tags: ["Biodiverzita", "Stromy", "Sezónnosť"],
   },
@@ -212,13 +222,13 @@ export const projects: Project[] = [
     year: "2025",
     area: "210 m²",
     image: images.detail,
-    imageAlt: "Trvalková výsadba pri svetlej fasáde domu",
+    imageAlt: "Drevené vyvýšené záhony so zeleninou pri zelenom plote",
     intro: "Priestor na pestovanie, stretávanie a obyčajný oddych.",
     description:
       "Ilustračná štúdia dvora prepája úžitkovú a okrasnú záhradu. Vyvýšené záhony dopĺňajú trvalky a jednoduchá pobytová plocha. Dôraz je na dobrej pôde, dostupnosti jednotlivých záhonov a radosti z vlastného pestovania.",
     gallery: [
       { src: images.greenery, alt: "Zeleň v mestskom priestore" },
-      { src: images.park, alt: "Vrstvenie rastlín v záhradnej kompozícii" },
+      { src: images.park, alt: "Pohľad zhora na členenie átriovej záhrady a výsadbu" },
     ],
     tags: ["Úžitková záhrada", "Vyvýšené záhony", "Trvalky"],
   },
