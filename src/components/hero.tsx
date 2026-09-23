@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowIcon } from "@/components/icons";
-import { TextLink } from "@/components/text-link";
 import { projects } from "@/lib/content";
 
 const slides = [projects[0], projects[2], projects[3]];
@@ -44,9 +44,11 @@ export function Hero() {
       <div className="hero-shade" />
       <div className="container hero-content">
         <p className="eyebrow hero-eyebrow">Záhradná architektúra s citom</p>
-        <h1>Záhrady, ktoré<br />sa stanú domovom.</h1>
-        <p className="hero-services">Návrh <span>·</span> Realizácia <span>·</span> Údržba</p>
-        <TextLink href="/realizacie" light>Pozrieť realizácie</TextLink>
+        <h1><span>Záhrady, ktoré</span>{" "}<span>sa stanú</span>{" "}<span>domovom.</span></h1>
+        <div className="hero-intro">
+          <p className="hero-services">Návrh <span>·</span> Realizácia <span>·</span> Údržba</p>
+          <Link href="/realizacie" className="solid-button hero-cta">Nájdite svoju inšpiráciu<ArrowIcon /></Link>
+        </div>
       </div>
       <div className="container hero-bottom">
         <div className="hero-caption" aria-live={playing ? "off" : "polite"} aria-atomic="true"><span className="hero-caption-line" /><span>{slides[active].title}<small>Ilustračný koncept · {slides[active].location}</small></span></div>

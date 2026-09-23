@@ -12,6 +12,20 @@ export function cssTimeToMilliseconds(value: string, fallback: number): number {
   return Number.isFinite(milliseconds) && milliseconds >= 0 ? milliseconds : fallback;
 }
 
+/** Images open like a photographic print; text and cards use a simple lift. */
+export function revealKeyframes(kind: string | undefined, distance: string, scale: string): Keyframe[] {
+  const frames: Keyframe[] = [
+    { opacity: 0, transform: `translate3d(0, ${distance}, 0) scale(${scale})` },
+    { opacity: 1, transform: "none" },
+  ];
+  if (kind === "image") {
+    frames[0].opacity = 0.2;
+    frames[0].clipPath = "inset(0 0 12% 0)";
+    frames[1].clipPath = "inset(0 0 0% 0)";
+  }
+  return frames;
+}
+
 /** Enhance existing markup without hiding it in CSS or changing React's DOM. */
 export function observeScrollReveals(root: HTMLElement): () => void {
   if (
@@ -30,8 +44,9 @@ export function observeScrollReveals(root: HTMLElement): () => void {
   let disposed = false;
 
   function isReadingTarget(element: HTMLElement) {
+    const ancestorTarget = element.closest(":target");
     return element.contains(document.activeElement) ||
-      !!element.closest(":target") || !!element.querySelector(":target");
+      (!!ancestorTarget && ancestorTarget !== root) || !!element.querySelector(":target");
   }
 
   function finish(element: HTMLElement) {
@@ -52,17 +67,14 @@ export function observeScrollReveals(root: HTMLElement): () => void {
     if (disposed || reducedMotion.matches || printMedia.matches || !root.contains(element) || isReadingTarget(element)) return;
 
     const style = window.getComputedStyle(element);
-    const distance = style.getPropertyValue("--reveal-distance").trim() || "24px";
+    const distance = style.getPropertyValue("--reveal-distance").trim() || "36px";
     const scale = style.getPropertyValue("--reveal-scale").trim() || "1";
 
     // The effect exists only while playing. Failed/unsupported animations leave
     // the normal, visible content intact; no hidden classes or inline styles persist.
     try {
-      const animation = element.animate([
-        { opacity: 0, transform: `translate3d(0, ${distance}, 0) scale(${scale})` },
-        { opacity: 1, transform: "none" },
-      ], {
-        duration: cssTimeToMilliseconds(style.getPropertyValue("--reveal-duration"), 760),
+      const animation = element.animate(revealKeyframes(element.dataset.reveal, distance, scale), {
+        duration: cssTimeToMilliseconds(style.getPropertyValue("--reveal-duration"), 950),
         delay: cssTimeToMilliseconds(style.getPropertyValue("--reveal-delay"), 0),
         easing: "cubic-bezier(0.22, 1, 0.36, 1)",
         fill: "backwards",
@@ -83,7 +95,9 @@ export function observeScrollReveals(root: HTMLElement): () => void {
       pending.delete(entry.target);
       play(entry.target);
     }
-  }, { rootMargin: "0px 0px 24px 0px", threshold: 0 });
+  // Start just inside the viewport, rather than finishing before a slow scroll
+  // has brought the image into view. No scroll listeners or layout polling.
+  }, { rootMargin: "0px 0px -24px 0px", threshold: 0 });
 
   function register(element: HTMLElement) {
     if (seen.has(element)) return;

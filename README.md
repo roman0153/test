@@ -1,6 +1,6 @@
 # Eden Gardens
 
-A responsive Slovak garden-architecture website built with **Next.js 16 App Router, React 19 and TypeScript**, inspired by the supplied Eden Gardens reference. Warm ivory, muted copper, restrained typography, landscape photography and generous spacing.
+A responsive Slovak garden-architecture website built with **Next.js 16 App Router, React 19 and TypeScript**. The refreshed direction takes inspiration from the supplied [outdoor reference](https://lightgreen-ant-121233.hostingersite.com/): warm cream, forest green, pale lime, restrained terracotta details, bold editorial headings and generous landscape photography. The existing Eden content, selected Pinterest photos and contact behavior are retained; no reference-site assets or packages were added.
 
 ## Setup status
 
@@ -32,24 +32,26 @@ This is a server-capable Next.js application, **not a static export**: the conta
 
 ## Pages and interactions
 
-- **Home:** manually controlled, optionally rotating hero; studio introduction; four services; selected projects.
+- **Home:** oversized headline and photo-led, optionally rotating hero; forest-green section ribbon; studio introduction; four photographic service cards; larger selected-project grid; lime contact panel.
 - **Projects:** category filtering, six illustrative project detail pages, accessible full-screen photo galleries with arrow-key navigation and Escape to close.
 - **Services:** four detailed offerings, process overview and service-prefilled contact links.
 - **About:** studio philosophy and values.
 - **Journal:** three complete garden/architecture articles with individual routes and metadata.
 - **Contact:** client/server validation, inline accessible errors, submission states, genuine server processing and expandable FAQs.
 - **Privacy, 404 and error pages**, responsive navigation, keyboard focus handling, reduced-motion styles, page metadata, sitemap and robots directives.
-- **Scroll animations:** soft fade-and-lift section reveals, gentle image entrances and staggered service, project and journal cards.
+- **Scroll animations:** fade-and-lift text, opening photo masks and staggered cards, plus progressive desktop hero depth.
 
-The design uses system fonts to avoid an external font dependency. Native modal dialogs provide keyboard focus containment, Escape handling and focus restoration. Hero rotation is off by default and stops when a visitor enters it with a pointer or keyboard.
+The design uses a condensed system-font stack for headings and system sans-serif body text; typography can differ slightly by OS, with no font downloads. Colors, responsive layouts and motion tokens live in [src/app/globals.css](src/app/globals.css). Native modal dialogs provide keyboard focus containment, Escape handling and focus restoration. Hero rotation is off by default and stops when a visitor enters it with a pointer or keyboard.
 
 ### Scroll motion
 
 The small client entry point in [src/components/scroll-animations.tsx](src/components/scroll-animations.tsx) enhances the server-rendered pages without adding wrappers or animation dependencies. The controller in [src/lib/scroll-reveal.ts](src/lib/scroll-reveal.ts) uses one `IntersectionObserver` and the browser's Web Animations API; there are no continuous scroll handlers or custom scroll physics.
 
 - Add `data-reveal="up"` to an existing section/card or `data-reveal="image"` to an image wrapper. Optional `data-reveal-delay="1"`, `"2"` or `"3"` gives a short stagger. Avoid nesting reveal targets.
-- Tune the `--reveal-*` tokens in [src/app/globals.css](src/app/globals.css). Mobile uses shorter distances, durations and delays.
-- An offscreen element animates once as it approaches the viewport. Content already visible on initial hydration, scroll restoration or insertion is not faded out. Page headings, hero/LCP images, forms and modal dialogs are left immediate.
+- Tune the `--reveal-*` tokens in [src/app/globals.css](src/app/globals.css). Desktop text reveals last 950ms; photos use 1200ms with a shallow bottom-edge mask and subtle scale. Mobile uses shorter distances, durations and delays. Both CSS seconds and milliseconds are parsed correctly after minification.
+- An offscreen element animates once, starting 24px inside the viewport rather than before it is visible. Content already visible on initial hydration, scroll restoration or insertion is not faded out. Page headings, hero/LCP images, form inputs and gallery dialogs are excluded from scroll reveals.
+- Supporting desktop browsers with a fine pointer use a native CSS view timeline for gentle hero-image depth. Unsupported browsers, touch layouts, mobile widths and reduced-motion settings show a static image. No scroll-hijacking, continuous JavaScript loops or autoplaying decorative marquees are used.
+- The hero CTA has a short entrance, cancelled on keyboard focus; the native navigation drawer has a short slide-in. Neither changes dialog semantics or delays access to content. Both respect reduced motion.
 - Content remains visible with JavaScript disabled or animation APIs unavailable. No hidden classes, `aria-hidden`, or layout-changing styles are used; animation effects are removed after completion.
 - Reduced-motion preferences, including live changes, skip/cancel the effects. Keyboard focus and hash navigation reveal the relevant content immediately; printing also disables the effects.
 - Streamed route content and newly inserted project cards are registered automatically. Removed elements, observers, animations and listeners are cleaned up.
@@ -140,6 +142,15 @@ The test suite covers validation and malformed input, origin/content-type/body-s
 - A full dependency-aware typecheck, ESLint run, Next.js build and live-application browser test remain blocked by registry authentication. Syntax-only checks are **not** a substitute for these.
 
 The original scroll-animation test and compiler reruns were skipped. During the Pinterest photo replacement, **44/44 native tests passed**, including the scroll timing tests and new checks for direct image URLs and the Next.js image allowlist. All seven selected original images loaded and decoded in an isolated browser gallery; their source pins and dimensions were inspected. This does not verify Next.js server-side optimisation or the updated Vercel deployment. Editor diagnostics still report missing local Node typings; dependency-aware typechecking and a production build remain outstanding.
+
+### Reference-inspired refresh checks
+
+- **47/47 native tests passed**, including new text/image keyframe cases and production-minified timing values.
+- **32 source files passed syntax-only transpilation** using the editor's existing compiler. Edited-file editor diagnostics reported no errors; this is not a dependency-aware typecheck.
+- **36 isolated layout checks passed**: home, projects, services, about, journal and contact at 320, 390, 640, 768, 1024 and 1440px. No page-level horizontal overflow, hero-title/CTA/control overlap or duplicate main headings was detected. Desktop and mobile styling was visually inspected.
+- The actual reveal controller was exercised for photo masks, timing, completion, once-only playback, keyboard focus, dynamic insertion/removal, cleanup, reduced motion and printing. Native desktop parallax changed with scrolling and returned to a static image for reduced motion and mobile.
+- Eight representative solid-background text/color pairs passed 4.5:1 contrast (minimum measured: 4.81:1). This is not a full accessibility audit or verification of all photographic backgrounds.
+- These checks used temporary source-derived HTML with rendering shims, the actual stylesheet and the actual animation controller—not React hydration or Next.js. Client-side routing, filter/carousel state, production CSS optimisation and the updated live deployment still require a running application. No packages or registry settings were changed.
 
 VS Code tasks for tests, development, production build and all checks are available in [.vscode/tasks.json](.vscode/tasks.json). Use **Terminal → Run Task**. The development task is ready for use after dependencies are installed.
 
